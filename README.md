@@ -34,6 +34,7 @@ A estrutura da entidade correspondente seria a seguinte:
   Sugestões:
   </br>
   LINK DO REPOSITORIO ORIGINAL: https://github.com/backend-br/desafios/blob/master/cryptography/PROBLEM.md?plain=1
+  
   [AES](https://pt.wikipedia.org/wiki/Advanced_Encryption_Standard) para criptografia simétrica ou
   [RSA](https://en.wikipedia.org/wiki/PBKDF2) para criptografia assimétrica.
 
