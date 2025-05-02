@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import criptografia.spring.dto.TransactionRecord;
+import criptografia.spring.dto.TransactionRecordRequest;
 import criptografia.spring.entities.Transaction;
 import criptografia.spring.services.TransactionService;
 
@@ -44,7 +45,7 @@ public class TransactionResource {
 	 * 
 	 * */
 	@PostMapping
-	public ResponseEntity<Transaction> create (@RequestBody Transaction transaction){
+	public ResponseEntity<TransactionRecord> create (@RequestBody Transaction transaction){
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.create(transaction));
 	}
 	/*
@@ -53,7 +54,7 @@ public class TransactionResource {
 	 * 
 	 * */
 	@PutMapping("/{id}")	
-	public ResponseEntity<Transaction> update (@RequestBody Transaction transaction, @PathVariable Long id){
+	public ResponseEntity<Transaction> update (@RequestBody TransactionRecordRequest transaction, @PathVariable Long id){
 		return ResponseEntity.ok(service.update(transaction, id));
 	}
 	/*

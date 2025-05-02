@@ -5,22 +5,16 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import criptografia.spring.DesafioCriptografiaApplication;
 import criptografia.spring.dto.TransactionRecord;
+import criptografia.spring.dto.TransactionRecordRequest;
 import criptografia.spring.entities.Transaction;
 import criptografia.spring.repository.TransactionRepository;
 
 @Service
 public class TransactionService {
 
-    private final DesafioCriptografiaApplication desafioCriptografiaApplication;
-
 	@Autowired
 	public TransactionRepository repository;
-
-    TransactionService(DesafioCriptografiaApplication desafioCriptografiaApplication) {
-        this.desafioCriptografiaApplication = desafioCriptografiaApplication;
-    }
 	/*
 	 * 
 	 * GET
@@ -43,20 +37,23 @@ public class TransactionService {
 	 * POST
 	 * 
 	 * */
-	public Transaction create(Transaction transaction) {
+	public TransactionRecord create(Transaction transaction) {
 		
 		transaction.setRawCreditCardToken(transaction.getEncryptCreditCardToken());
 		transaction.setRawUserDocument(transaction.getEncryptUserDocument());
-		return repository.save(transaction);
+		repository.save(transaction);
+		return TransactionRecord.toTransactionEntity(transaction);
 	}
 	/*
 	 * 
 	 * PUT
 	 * 
 	 * */
-	public Transaction update(Transaction transaction, Long id) {
-		transaction.setId(id);
-		return repository.saveAndFlush(transaction);
+	public Transaction update(TransactionRecordRequest transaction, Long id) {
+		var findTransactionById = repository.findById(id);
+		findTransactionById.get().setValueTransaction(transaction.valueTransaction());
+		repository.saveAndFlush(findTransactionById.get());
+		return findTransactionById.get();
 	}
 	/*
 	 * 
